@@ -1,0 +1,5 @@
+Après avoir testé différents tests dont UnnecessaryBooleanAssertion ou bien JUnitSpelling qui n’ont donné aucune erreur. 
+Cependant, après le test JUnitUseExpected on remarque 35 erreurs dans le fichier de test commons-maths-master. 
+Cette erreur survient quand un test qui devrait lever une exception ne le spécifie pas avant Exemple : @Test(expected=Exception.class).
+
+Il faudrait continuer de tester la valeur obtenue car même si ça passe cela ne veut pas dire que le test est complètement valider.

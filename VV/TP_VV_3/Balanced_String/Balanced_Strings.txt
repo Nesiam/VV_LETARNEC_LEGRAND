@@ -1,0 +1,21 @@
+1) Soit notre ensemble, comportant l’ensemble des possibilités pouvant être pris par notre méthode isBalanced(), qu’on appellera E. 
+On peut identifier différents blocs de partition à partir de la construction de notre méthode.
+Ainsi, on identifie pour l’instant 5 blocs : 
+- Quand la parenthèse est fautif, exemple “{ [ ] ( }” 
+- Quand le crochet est fautif , exemple “{ ( ) ] }”
+- Quand c’est l’accolade qui est fautif, exemple “( [ ] { )”
+- Quand la valeur donnée à isBalanced() est correcte, exemple “{ [ ] ( ) }”
+- Quand tous sont fautif, exemple “{ [ ( “
+
+2) On teste ensuite la couverture de nos tests sur notre méthode isBalanced. 
+On observe à l’aide de Jacoco, que notre couverture est de 100% pour la couverture de Missed Instructions et 92% pour les Missed Branches;
+
+3)Afin d’améliorer notre couverture dans les Missed Branches, il suffit de tester les prédicats qui utilisent plus de deux opérateurs booléens. 
+Ainsi suivant le code que je propose, il suffit d’ajouter les blocs suivants:
+- la parenthèse et le crochet sont fautifs
+- la parenthèse et l’accolade sont fautifs
+- le crochet et l’accolade sont fautifs
+Après l’écriture de tests pour ces blocs, on observe que notre couverture est passée à 100%.
+
+4) On utilise ensuite PIT afin de tester la mutation d’opérateur dans notre code afin de vérifier la pertinence de nos tests. 
+On observe que Maven, à l’aide de PIT, effectue 27 mutations et 27 sont tuées à la fin du processus. Ainsi, on peut conclure que nos tests sont pertinents. 

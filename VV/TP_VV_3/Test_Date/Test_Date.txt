@@ -1,0 +1,53 @@
+1) Nous allons concevoir le partitionnement de l’espace d'entrée pour chaque méthode.
+
+Pour isLeapYear on a les blocs suivant : 
+- Quand l’année est divisible par 400
+- Quand l’année est divisible par 100 mais pas par 400
+- Quand l’année est divisible par 4 mais pas par 400 ni par 100.
+
+
+Pour isValidDate on a : 
+- Quand l’année est bissextile, le mois est février et la date est fautif
+- Quand l’année est bissextile, le mois est février et la date est bonne
+- Quand le mois est fautif
+- Quand l’année n’est pas bissextile, en février est la date est bonne
+- Quand l’année n’est pas bissextile, en février est la date est fautif
+- Quand le mois est pair, la date est fautif
+- Quand le mois est pair, la date est bonne
+- Quand le mois est impair, la date est fautif
+- Quand le mois est impair la date est bonne
+Afin de valider le compte rendu je ne détaille pas les blocs des mois pair et impair mais ceux-ci dépendent s’ils sont avant Août ou non.
+
+Pour nextDate() on a : 
+- Quand le jour n’est pas le dernier jours du mois
+- Quand il est le dernier jour du mois mais pas celui de décembre
+- Quand il est le dernier jour du mois de décembre
+
+Pour previousDate() on a : 
+- Quand le jour n’est pas le premier du mois
+- Quand le jour est le premier du mois mais pas celui de janvier
+- Quand le jour est le premier du mois de janvier
+
+Pour compareTo(), on a : 
+- Quand les dates sont antérieures
+- Quand les dates sont postérieures
+- Quand les dates sont les mêmes
+
+Il est aussi nécessaire de tester le constructeur en vérifiant bien qu’on renvoie une exception si la date donnée n’est pas valide.
+
+2) On teste ensuite la couverture de nos tests sur nos méthodes. On observe à l’aide de Jacoco, que notre couverture est de 100% pour la couverture de Missed Instructions et 82% pour les Missed Branches.
+
+3) Afin d’améliorer notre couverture dans les Missed Branches, il suffit de tester les prédicats qui utilisent plus de deux opérateurs booléens. 
+Ainsi suivant le code que je propose, il suffit d’ajouter les blocs suivants:
+isValidDate()
+- Quand la date est inférieur à 0
+- Quand la date est supérieur à la date max du mois
+
+compareTo()
+	-Quand c’est l’année qui est postérieur ou antérieur
+	-Quand c’est le mois qui est postérieur ou antérieur
+Après l’écriture de tests pour ces blocs, on observe que notre couverture est passée à 100%, on a un total de 44 tests.
+
+
+4) On utilise ensuite PIT afin de tester la mutation d’opérateur dans notre code afin de vérifier la pertinence de nos tests. On observe que Maven, à l’aide de PIT, effectue 101 mutations et toutes sont tuées à la fin du processus. 
+Ainsi, on peut conclure que nos tests sont pertinents. 

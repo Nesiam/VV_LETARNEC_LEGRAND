@@ -1,0 +1,60 @@
+1) L’assertion assertTrue(3*.4 == 1.2)  échoue toujours à cause de l’approximation de java, en effet, celui-ci quand on exécute l’opération 3*.4 java nous retourne 1.200000002 et non 1.2. 
+Afin de régler ce problème il suffit d’encadrer le résultat souhaité avec une certaine marge d’encadrement.
+
+2)On a que : 
+- assertEquals() teste si deux objets sont égaux.
+- assertSame() teste si deux objets référent au même objet.
+On a donc que assertEquals utilise la méthode equals() (qu’on peut surchargé en la réécrivant dans notre classe) pour comparer des objets alors que assertSame() utilise l’opérateur == pour les comparer. 
+Donc la différence est exactement la même qu’entre l’opérateur == et la méthode equals().
+
+3)  On peut utiliser ‘fail’ de différentes manières la première vue en classe : 
+- s’exécute si une exception est attrapé en amont
+Exemple :
+@Test
+public void expectedException(){
+  try{
+    methodThrowsException();
+    fail("Expected exception was not thrown");
+ } catch (Exception e){
+          assertNull(e);
+         }
+}
+
+- On utilise la méthode fail() pour les tests incomplets ou pas encore implémentés.
+@Test 
+public void incompleteTest() {
+	fail(“Not yet implemented”);
+}
+
+- le ‘fail’ permet d’échouer au test lorqu’une exception ne devrait pas être levée est une autre option:
+@Test 
+public void unexpectedException(){
+	try{
+		safeMethod();
+		/code/
+	} catch (Exception e) {
+		fail(“Une exception inattendu a été jeté”);}
+}
+
+- On utilise ‘fail’ lorsqu’un résultat ne répond pas à une condition souhaitée.
+@Test 
+public void test(int result){
+	if(result>4){
+		fail(“Le résultat ne peut excéder 4”)
+	}
+	//code
+}
+
+- Permet d’indiquer quand le code ne casse pas au bon endroit
+@Test
+public void test(){
+	int value = 2;
+	for(int i=0;i<5;i++){
+		if((i+value)%4==0){
+			return;
+		}
+	}
+	fail(“Devrait déjà return”);
+}
+
+4) Le plus grand avantage est que la méthode assertThrows permet de simplifier le code en évitant nécessairement un test particulier qui vérifie la bonne correspondance entre la valeur voulu et la valeur attendue.

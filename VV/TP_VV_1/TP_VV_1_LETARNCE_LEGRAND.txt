@@ -1,0 +1,64 @@
+1)Year 2000 problem ou bug de l’an 2000 est un l’un, si ce n’est le, bug majeur sur le format des dates. 
+En effet, ce bug à portée globale à toucher tous les ordinateurs de l’époque car on parle d’une erreur de conception systématique. 
+Il a eu pour conséquence de fausser toutes les dates à partir de 2000, notamment en affichant 1900 ou 19000. 
+Son origine provient du coût de la mémoire qui a forcé les informaticiens à coder seulement 2 chiffres laissant le nombre 19 fixe. 
+On s’imagine bien qu’un simple test aurait révélé le bug, cependant la mentalité et le matériel n'étaient pas en adéquation à l’époque. 
+
+2)Parmi ces problèmes, trouvez-en un qui correspond à un bogue qui a été résolu. Classez le bogue comme local ou global. 
+Expliquez le bogue et la solution. Les contributeurs du projet ont-ils ajouté de nouveaux tests pour s'assurer que le bug est détecté s'il réapparaît dans le futur ?
+
+Le problème choisi est le suivant AbstractMultiValuedMapTest#testToString qui est un test feuilleté. Cela veut dire que le test échoue parfois mais si on répète suffisamment de fois celui-ci alors il finit par réussir.
+Celui-ci est un bug global et mineur, car celui-ci est implémenté par le module toString qui est commun à tous.
+Le bug est le suivant : AbstractMultiValuedMapTest#testToString suppose que la méthode toString d’un objet MultiValuedMap renvoie la représentation sous forme d’une chaîne dans un certain ordre. 
+C’est à dire que map.toString() est égale à “{A=[X,Y,Z],B=[U,V,W]}” alors qu’il pourrait également être “{B=[U,V,W],A=[X,Y,Z]}”.
+Pour corriger ce bug, il suffit simplement de tester les deux valeurs d'entrée possible ainsi : 
+
+assertEquals ( "{A=[X, Y, Z], B=[U, V, W]}" , map . toString ());
+devient : 
+assertTrue( “{A=[X,Y,Z],B=[U,V,W]}”.equals(map.toString()) ||
+		  “{B=[U,V,W],A=[X,Y,Z]}”.equals(map.toString()) };
+
+
+3)Netflix et chaos engineering
+
+Netflix est connu pour la popularisation du Chaos Engineering qui est une technique de vérification avec tolérance d’erreur. 
+Concrètement, L’entreprise vient volontairement provoquer une défaillance d’un serveur ou d’un service et étudie comment le reste du système réagit et comment les utilisateurs sont impactés. 
+Pour ce faire, Netflix va tout d’abord à partir du comportement usuel du système établir une hypothèse prédisant l’évaluation suite à la défaillance. 
+
+Ensuite, Netflix introduit la défaillance dans le système ce qui va affecter le système dans le monde entier. La dernière étape consiste à automatiser ces tests de sorte à suivre les tendances causés par les utilisateurs.
+La cible principale de Netflix sont les métriques dégagées par ces expériences, notamment celle liée à la disponibilité du contenu. 
+
+Cette métrique SPS, pour Stream Start per Second, permet de savoir si les utilisateurs sont capables de trouver du contenu et de le regarder. 
+Les employés ont passé tellement de temps à étudier cette mesure qu'ils sont capables de prédire son évolution comme avec la météo d’après les dires. 
+Ils sont aussi capables de comprendre à partir d’une hausse de latence ou d’utilisation de CPU qu’un service est défaillant ou dégradé. 
+Une alerte sur ces métriques permet de repérer les problèmes efficacement. 
+Finalement avec les ajustement issue de ces études, Netflix est capable de déplacer les flux d’une région géographique défaillante à une autre, assurant la continuité des services.
+
+Une des autres métriques utilisées par Netflix est la NAS pour New Account Signups per second qui correspond à la création de compte par seconde et décrit le flux entrant de nouveau utilisateur. 
+Mais l’on peut aussi imaginer des métriques telles le nombre d’articles achetés par seconde pour un e-commerce ou le nombre de pubs visionnées par seconde pour une entreprise ou une compagnie publicitaire.
+
+4) les principaux avantages d'avoir une spécification formelle pour WebAssembly.
+
+Premièrement, la sémantique a été drastiquement simplifiée. On cite comme exemple que documentation de la vérification de bytecode JVM est passé de 150 pages à une. Cela rend le langage bien plus user-friendly.
+Ensuite, le fait que le flux de données soit contrôlé rend la validation et la compilation rapide et simple. Cela permet de construire une base solide pour la future création de point de blocage et de gestion d’exception.
+Finalement, WebAssembly permet de transférer les responsabilités de sécurité mémoire au programme à la place de la machine. Cela permet de vérifier les problèmes mémoires avec de simples vérifications de fuites. 
+Cependant, Web assembly fonde son système d’objet sur Mu, une micro machine virtuelle, qui n’impose pas les sécurités mémoires. Ce job est laissé à des mécanismes des couches supérieures. De ce  fait, un bug dans ces mécanismes pourrait laisser un programme incorrect s'exécuter sans contrôle sur son comportement. Cela nous assure que l’implémentation de WebAssembly doit être testée rigoureusement.
+
+5) https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf
+
+Cette spécification mécanisée complète la première tentative de formalisation de l'article. Selon l'auteur de ce second article, quels sont les principaux avantages de la spécification mécanisée ? 
+Cela a-t-il aidé à améliorer la spécification formelle originale du langage ? 
+Quels autres artefacts ont été dérivés de cette spécification mécanisée ? Comment l'auteur a-t-il vérifié la spécification ? 
+Cette nouvelle spécification supprime-t-elle le besoin de tests ?
+
+
+Elle permet de simplifier l’optimisation du moteur Javascript et de rendre utilisable dans les scripts codés à la main. De plus, elle permet une véritable “cross-party” entre les différents navigateurs. 
+Elle permet notamment une sécurité accrue car lors d’une invocation d’une fonction WebAssembly, celle-ci s’exécute dans une sandbox qui ne peut pas accéder à l’état général de l’hôte. 
+Les concepteurs ont notamment apporté une attention particulière sur la spécification du langage de manière à ce qu’il se prête à l’analyse et à la vérification formelles. 
+Le projet explique tous les comportements sémantiques avec une règle formelle de style déduction naturelle.
+À l’aide de preuve et de modélisation, plusieurs déficiences dans la spécification officielle de WebAssembly ont été découvertes puis corrigées.
+Les artefacts dérivés de cette spécification mécanisée sont les suivants :
+un interprétateur d’exécutable vérifié séparé
+un vérificateur de type
+L’auteur a pu vérifier la spécification à l’aide de leur interpréteur exécutable en utilisant les tests de conformité officielle de WebAssembly et en menant des expériences de fuzzing.
+Cette nouvelle spécification ne supprime pas le besoin de tests.

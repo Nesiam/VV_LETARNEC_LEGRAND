@@ -1,0 +1,45 @@
+Question 1
+
+A cohesion class est une classe qui idéalement ne remplit qu’une fonction. Un manque de cohésion traduit que la classe remplit plusieurs fonctions est devrait être séparé en plusieurs classes.
+Les métriques TCC et LCC  correspondent à Tight et Loose Class Cohesion. Ces mesures ont pour but de quantifier si une classe fait preuve de cohésion.
+Ces mesures se basent sur le nombre de connexions inter-classe et de si la connexion est indirecte ou directe.
+On dit que deux méthodes sont directement connectées si elles peuvent interagir/accéder à la même variable. Sinon, elles sont indirectement connectées.
+On définit le nombre maximale de connexion possible par NP = N*(N-1)/2 avec N le nombre de méthodes de la classe étudiée. 
+Et on note le nombre de connexions indirectes NID et celui de connexions directes NDC.
+On définit alors les métriques 
+TCC par TCC = NDC/NP 
+LCC par LCC = (NDC + NID)/NP = TCC + NID/NP
+On se rend compte à partir des définitions des métriques que le seul cas ou TCC = LCC correspond à l’absence de méthodes indirectes et qu’on a toujours TCC <= LCC
+
+Question 2)
+
+Issue list :
+Return an empty collection rather than null
+A catch statement should never catch throwable since it includes errors
+Use one line for each declaration, it enhances code readability.
+Switch statements should be exhaustive, add a default case (or missing enum branches)
+Use equals() to compare object references
+A class which only has private constructors should be final
+clone() method must be public if the class implements Cloneable
+The instance method name '_reset' doesn't match '[a-z][a-zA-Z0-9]*'
+Avoid assignments in operands
+Avoid unnecessary if..then..else statements when returning booleans
+
+Worthy to solve: Use equals() to compare object references
+
+Prendre l’habitude d’utiliser equals() quand on procède à la comparaison de string rend le code plus sûr. 
+Par exemple, on ne s’attend pas à ce que la comparaison d'objets à l'aide de == produire un résultat trompeur, car l'opérateur == compare les références d'objets plutôt que les valeurs, là ou equals() compare bien les valeurs.
+Il suffit alors de remplacer les comparateurs == par equals().
+
+Unworthy to solve: The instance method name '_reset' doesn't match '[a-z][a-zA-Z0-9]*'
+
+Il est effectivement préférable de se rapporter à la convention habituelle de nommage de méthode pour améliorer la lisibilité du code. 
+Cependant, la convention du code est peut être différente ou cette variable est peut être nommée sous un format différent pour une raison. 
+Même si la résolution n’est pas compliquée à appliquer, celle ci n’en vaut peut être pas le coup.
+
+Question 3)
+
+Afin de vérifier le bon fonctionnement de notre règle, on teste différents projets proposés par le tp. Nous avons donc sélectionné le projet commons-lang-master et commons-math-master.
+Après exécution de notre règle, créée à l’aide du designer.bat de pmd et de la commande “pmd.bat -d repository_project -R repository_rule -f html>result.html”, on obtient deux pages html. 
+On observe que ces deux projets contiennent de nombreuses parties de code complexes avec plus de 3 if imbriqués. Pour le projet commons-math-master, on a dans ,l’ensemble du projet, 338 occurrences où on retrouve plus de 3 if imbriqués et pour commons-lang-master on a 169 warning avec deux erreurs de processus dans la classe ArrayUtilsAddTest.java.
+Ces résultats nous semblent cohérents en vue de la taille et de la complexité des projets.
